@@ -10,11 +10,15 @@ const Blog = () => {
     const [auteur, setAuteur] = useState('');
     const [article, setArticle] = useState('');
     useEffect(() => {
+        fetchDatas();
+    }, []);
+
+    function fetchDatas(){
         axios.get("http://localhost:3003/articles")
             .then((res) => {
                setArticles(res.data);
             })
-    }, []);
+    }
 
     function checkForm(event){
        event.preventDefault();
@@ -23,6 +27,10 @@ const Blog = () => {
            "content": article,
            "date": Date.now(),
            "id": articles.length + 1
+       }).then(() => {
+            fetchDatas();
+            setArticle('');
+            setAuteur('');
        })
     }
 
@@ -39,6 +47,14 @@ const Blog = () => {
         } else {
             setStyle({"color":"black", "display":"none"});
         }
+    }
+
+    function removeArticle(incoming){
+        console.log(incoming);
+    }
+
+    function test(){
+        console.log('toto')
     }
 
     return (
@@ -63,10 +79,12 @@ const Blog = () => {
             </form>
             {articles.map(element => (
                 <Article key={element.id}
+                         removeArticle={removeArticle}
                       infos={{
                           author: element.author,
                           desc: element.content,
                           date: element.date,
+                          id: element.id,
                       }}
                 />
             ))}

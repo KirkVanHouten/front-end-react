@@ -1,9 +1,13 @@
 import React from 'react';
+import axios from "axios";
 
 const Article = ({infos}) => {
     let dateObject = new Date(infos.date);
     const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute:'numeric', second: 'numeric'};
     let dateFormated = dateObject.toLocaleDateString('fr-FR', options)
+    function deleteArticle(){
+        this.props.removeArticle('toto');
+    }
     return (
         <div className={"container mt-4"}>
             <div className={"card mb-3"}>
@@ -16,7 +20,7 @@ const Article = ({infos}) => {
                     <p className={"card-text"}>{infos.desc}</p>
                 </div>
                 <div className={"d-flex align-self-end mb-3 me-3"}>
-                    <button className={"btn btn-danger"}>Supprimer</button>
+                    <button className={"btn btn-danger"} onClick={deleteArticle}>Supprimer</button>
                     <button className={"btn btn-primary ms-3"}>Modifier</button>
                 </div>
 
