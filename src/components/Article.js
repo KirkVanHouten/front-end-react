@@ -6,7 +6,7 @@ const Article = ({infos, removeArticle}) => {
     const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute:'numeric', second: 'numeric'};
     let dateFormated = dateObject.toLocaleDateString('fr-FR', options)
     function deleteArticle(){
-        removeArticle(infos);
+        removeArticle(infos.id);
     }
     return (
         <div className={"container mt-4"}>

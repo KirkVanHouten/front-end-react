@@ -49,8 +49,11 @@ const Blog = () => {
         }
     }
 
-    function removeArticle(incoming){
-        console.log(incoming);
+    function removeArticle(idToRemove){
+        axios.delete("http://localhost:3003/articles/"+idToRemove)
+            .then(() => {
+              fetchDatas();
+            })
     }
 
     return (
