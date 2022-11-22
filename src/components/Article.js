@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from "axios";
 
-const Article = ({infos}) => {
+const Article = ({infos, removeArticle}) => {
     let dateObject = new Date(infos.date);
     const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute:'numeric', second: 'numeric'};
     let dateFormated = dateObject.toLocaleDateString('fr-FR', options)
     function deleteArticle(){
-        this.props.removeArticle('toto');
+        removeArticle(infos);
     }
     return (
         <div className={"container mt-4"}>

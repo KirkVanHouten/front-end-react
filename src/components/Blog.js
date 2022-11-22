@@ -53,10 +53,6 @@ const Blog = () => {
         console.log(incoming);
     }
 
-    function test(){
-        console.log('toto')
-    }
-
     return (
         <div>
             <h1 className={"mb-4 mt-4 text-center"}>Blog</h1>
