@@ -1,6 +1,8 @@
 import React from 'react';
 
 const Card = ({details}) => {
+
+    // Template d'affichage d'une seule recette
     return (
         <div className={"card col-2 me-4 mb-4"} style={{"borderColor":"#f88577"}}>
             <div className={"card-body"}>

@@ -5,6 +5,7 @@ const Menu = () => {
     let activeStyle = {
         textDecoration: "underline",
     };
+    // Composant représentant la nabar présente en haut de l'application
     return (
         <div className={"d-flex justify-content-center"}>
             <nav className="navbar bg-light w-75">

@@ -2,16 +2,23 @@ import React from 'react';
 import axios from "axios";
 
 const Article = ({infos, removeArticle, updateArticle}) => {
+    // Composant contenant le code d'un objet Article
     let dateObject = new Date(infos.date);
     const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute:'numeric', second: 'numeric'};
+    // Transcrit la date récupérée du serveur json au format souhaité pour l'affichage
     let dateFormated = dateObject.toLocaleDateString('fr-FR', options)
+
+    // --- Suppression d'un article basé sur son id --------------------------------------------- deleteArticle
     function deleteArticle(){
         removeArticle(infos.id);
     }
 
+    // --- Modification de l'article courant avec les informations récupérées en props ---------- modifyArticle
     function modifyArticle(){
         updateArticle(infos);
     }
+
+    // Template d'affichage d'un article
     return (
         <div className={"container mt-4"}>
             <div className={"card mb-3"}>

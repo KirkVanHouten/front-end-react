@@ -4,6 +4,7 @@ import Recettes from "./components/Recettes";
 import Blog from "./components/Blog";
 import Layout from "./components/Layout";
 const App = () => {
+    // On définit les routes utilisables par l'application -> /recettes et /blog liés aux composants portants le même nom
     return (
         <div>
             <BrowserRouter>

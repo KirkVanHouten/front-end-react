@@ -21,13 +21,19 @@ const Blog = () => {
         fetchDatas();
     }, []);
 
+    // Au chargement de la page on va récupérer la liste des articles déjà présents dans la base de données
     function fetchDatas(){
         axios.get("http://localhost:3003/articles")
             .then((res) => {
+                // Une fois les articles récupérés, on les stocke dans la variable d'état 'articles'
                setArticles(res.data);
             })
     }
 
+    // --- A l'envoi du formulaire, insère les données écrites par l'utilisateur dans la base de données
+    // --- puis recharge les données de cette dernière afin de mettre à jour la liste des articles
+    // --- et enfin, réinitialise les variables d'état article et auteur et cache le texte indiquant une saisie
+    // --- trop courte ------------------------------------------------------------------------------------------------- checkForm
     function checkForm(event){
        event.preventDefault();
        axios.post("http://localhost:3003/articles", {
@@ -43,15 +49,20 @@ const Blog = () => {
        })
     }
 
+    // --- Met à jour la variable d'état auteur à chaque changement dans la zone de texte liée au nom de l'auteur ------ handleAuteurInput
     function handleAuteurInput(evt){
         setAuteur(evt.target.value);
     }
 
+    // --- Met à jour la variable d'état article à chaque changement dans la zone de texte liée au texte de l'article -- handleArticleInput
     function handleArticleInput(evt){
         setArticle(evt.target.value);
         checkArticleLength(evt.target.value);
     }
 
+    // --- Vérifie si le texte entré dans le texte de l'article à une longueur supérieure ou égale à la longueur
+    // --- minimale, si c'est le cas on n'affiche rien, sinon, on affiche un texte en rouge indiquant le nombre
+    // --- de caractères manquant dans le texte ------------------------------------------------------------------------ checkArticleLength
     function checkArticleLength(txt){
         let strInputed = txt.length;
         setNbCar(nbCarMin-strInputed);
@@ -62,6 +73,7 @@ const Blog = () => {
         }
     }
 
+    // --- Supprime l'article dont l'id est passée en paramètres de la fonction ---------------------------------------- removeArticle
     function removeArticle(idToRemove){
         axios.delete("http://localhost:3003/articles/"+idToRemove)
             .then(() => {
@@ -69,15 +81,21 @@ const Blog = () => {
             })
     }
 
+    // --- Met à jour la variable d'état authorToEdit à chaque changement dans la zone de texte liée au nom de l'auteur
+    // --- lors d'une modification d'une article ----------------------------------------------------------------------- handleEditArticleAuthor
     function handleEditArticleAuthor(evt){
         setAuthorToEdit(evt.target.value);
     }
 
+    // --- Met à jour la variable d'état descToEdit à chaque changement dans la zone de texte liée au contenu d'un
+    // --- article lors d'une modification ----------------------------------------------------------------------------- handleEditArticleDesc
     function handleEditArticleDesc(evt){
        setDescToEdit(evt.target.value);
        checkArticleLength(evt.target.value);
     }
 
+    // --- Afiche le modal de modification d'un article et remplit ses inputs avec les données
+    // --- de l'article à modifier ------------------------------------------------------------------------------------- updateArticle
     function updateArticle(articleToEdit){
         setShowModal(true);
         setArticleToEdit(articleToEdit);
@@ -85,10 +103,9 @@ const Blog = () => {
         setDescToEdit(articleToEdit.desc);
     }
 
+    // --- Sauvegarde la modification d'un article dans la base de données puis cache le modal de modification,
+    // --- et enfin récupère les données de la base de données pour afficher les modifications ------------------------- saveUpdate
     function saveUpdate(){
-        // axios.post("http://localhost:3003/articles/"+articleToEdit.id,{
-            // articleToEdit
-        // })
         let newArticle = Object.assign({},articleToEdit);
         newArticle.author = authorToEdit;
         newArticle.desc   = descToEdit;
@@ -103,21 +120,26 @@ const Blog = () => {
             })
     }
 
+    // --- Fonction permettant de cacher le texte indiquant le nombre de caractères manquant au texte d'un article ----- resetTextAreaHelper
     function resetTextAreaHelper(){
         setNbCar(nbCarMin);
         setStyle({"color":"black", "display":"none"});
     }
 
+    // --- Cache le modal de modification d'un article ----------------------------------------------------------------- hideModal
     function hideModal(){
         setShowModal(false);
         resetTextAreaHelper();
     }
 
+    // --- Stocke le nombre de caractères manquant du modal de modification dans la variable d'état nbCar
+    // --- puis stocke dans la variable d'état style le style par défaut du helper (caché) ----------------------------- setNbCarModal
     function setNbCarForModal(){
         setNbCar(nbCarMin-descToEdit);
         setStyle({"color":"black", "display":"none"});
     }
 
+    // Template d'affichage de la page Blog
     return (
         <div>
             <Modal show={showModal} onShow={setNbCarForModal} onHide={hideModal} size={"lg"} centered>
